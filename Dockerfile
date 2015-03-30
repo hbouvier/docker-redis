@@ -1,8 +1,7 @@
-FROM ubuntu
+FROM alpine:3.1
+MAINTAINER Henri Bouvier
 
-RUN apt-get update -y
-RUN apt-get install -y redis-server
-
+RUN apk update && apk update && apk add --update redis && rm -rf /var/cache/apk/*
 RUN rm -f /etc/redis/redis.conf
 ADD ./config /etc/redis/
 
@@ -10,7 +9,7 @@ ADD ./config /etc/redis/
 VOLUME [ "/var/run/redis", "/var/log/redis", "/var/lib/redis" ]
 
 # Define working directory.
-WORKDIR /tmp
+WORKDIR /var
 
 ENV REDIS_CONF redis.conf
 
